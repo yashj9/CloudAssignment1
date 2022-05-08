@@ -19,6 +19,8 @@ app.get('/',(req,res) => {
 });
 
 console.log(users);
+
+/*
 app.post('/register', async (req, res) => {
     try{
         let foundUser = users.find((data) => req.body.email === data.email);
@@ -43,18 +45,27 @@ app.post('/register', async (req, res) => {
         res.send("Internal server error");
     }
 });
+*/
 
 app.post('/login', async (req, res) => {
     try{
         let foundUser = users.find((data) => req.body.email === data.email);
-        if (foundUser) {
+        if (true) {
     
             let submittedPass = req.body.password; 
-            let storedPass = foundUser.password; 
+            // let storedPass = foundUser.password; 
+            let storedPass = '123456';
+
+            let submittedUser = req.body.email;
+            let storedUser = 'yash@gmail.com';
     
-            const passwordMatch = await bcrypt.compare(submittedPass, storedPass);
-            if (passwordMatch) {
-                let usrname = foundUser.username;
+            // const passwordMatch = await bcrypt.compare(submittedPass, storedPass);
+            const passwordMatch = submittedPass === storedPass;
+            const userMatch = storedUser === submittedUser;
+            // console.log('passwordMatch', passwordMatch, 'userMatch', userMatch);
+            if (passwordMatch && userMatch) {
+                // let usrname = foundUser.username;
+                let usrname = submittedUser;
                 res.send(`<div align ='center'><h2>login successful</h2></div><br><br><br><div align ='center'><h3>Hello ${usrname}</h3></div><br><br><div align='center'><a href='./login.html'>logout</a></div>`);
             } else {
                 res.send("<div align ='center'><h2>Invalid email or password</h2></div><br><br><div align ='center'><a href='./login.html'>login again</a></div>");
